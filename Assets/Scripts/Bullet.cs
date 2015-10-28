@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bullet : MonoBehaviour {
-
+public class Bullet : MonoBehaviour
+{
     public float range = 5;
     public float damage = 100;
     public float speed = 10;
@@ -17,12 +17,14 @@ public class Bullet : MonoBehaviour {
     public float strength;
     public float linearStrength;
 
-	void Start () {
+    void Start()
+    {
         tf = GetComponent<Transform>();
         sr = GetComponent<SpriteRenderer>();
     }
-	
-	void Update () {
+
+    void Update()
+    {
         //Update position
         tf.position += new Vector3(velocity.x, velocity.y, 0.01f) * Time.deltaTime + direction * speed * Time.deltaTime;
 
@@ -40,7 +42,7 @@ public class Bullet : MonoBehaviour {
 
         sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, strength);
         currentDamage = damage * strength;
-	}
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -49,8 +51,7 @@ public class Bullet : MonoBehaviour {
         {
             if (other.gameObject != creator)
             {
-                otherUnit.damage(currentDamage);
-                Debug.Log(currentDamage);
+                otherUnit.damage(new Damage(currentDamage));
                 Destroy(gameObject);
             }
         }

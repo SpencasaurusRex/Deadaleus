@@ -1,29 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Unit : MonoBehaviour {
+public class Unit : MonoBehaviour
+{
 
     public float maxHealth;
-    private float health;
+    public float health;
+    public Shield shield;
 
-    public Unit()
+    void Start()
     {
-        
+        shield = GetComponent<Shield>();
+        health = maxHealth;
     }
 
-	void Start () {
-        health = maxHealth;
-	}
-	
-	void Update () {
-	
-	}
-
-    public void damage(float amount)
+    void Update()
     {
-        if (amount > 0)
+
+    }
+
+    public void damage(Damage d)
+    {
+        // If damage is applicable
+        if (d.amount > 0)
         {
-            health -= amount;
+            shield.damage(d);
+            health -= d.amount;
         }
         if (health <= 0)
         {
