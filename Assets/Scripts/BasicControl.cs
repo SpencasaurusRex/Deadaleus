@@ -14,6 +14,7 @@ public class BasicControl : MonoBehaviour {
     private const float TORQUE_DAMPENER = .05f;
     private const float BACK_DAMPENER = 0.3f;
     private const float DISTANCE = .3f;
+    private Vector3 Z_OFFSET = new Vector3(0, 0, -1);
 
 	void Start () {
 	    rb = GetComponent<Rigidbody2D>();
@@ -54,13 +55,12 @@ public class BasicControl : MonoBehaviour {
         if (Input.GetKey(KeyCode.Space) && currentCooldown <= 0)
         {
             currentCooldown += cooldown;
-            GameObject b = Instantiate(bullet);
+			GameObject b = Instantiate(bullet);
             Bullet bul = b.GetComponent<Bullet>();
-            bul.velocity = rb.velocity;
-            bul.direction = new Vector3(Mathf.Cos(tf.rotation.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(tf.rotation.eulerAngles.z * Mathf.Deg2Rad), 0);
+            Vector3 direction = new Vector3(Mathf.Cos(tf.rotation.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(tf.rotation.eulerAngles.z * Mathf.Deg2Rad), 0);
             bul.creator = gameObject;
             Transform trans = b.GetComponent<Transform>();
-            trans.position = tf.position + bul.direction * DISTANCE;
+            trans.position = tf.position + direction * DISTANCE + Z_OFFSET;
             trans.rotation = tf.rotation;
         }
 
